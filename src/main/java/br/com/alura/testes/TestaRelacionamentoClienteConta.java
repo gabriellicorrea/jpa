@@ -4,31 +4,30 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
+import br.com.alura.jpa.modelo.Cliente;
 import br.com.alura.jpa.modelo.Conta;
 
-public class CriaConta {
-	
+public class TestaRelacionamentoClienteConta {
+
 	public static void main(String[] args) {
 		
 		EntityManagerFactory emf = Persistence.createEntityManagerFactory("contas");
 		EntityManager em = emf.createEntityManager();
+	
 		
 		Conta conta = new Conta();
-		conta.setTitular("Gabi");
-		conta.setAgencia(1234);
-		conta.setNumero(123456);
+		conta.setId(1L);
 		
-		Conta conta2 = new Conta();
-		conta2.setTitular("Kaue");
-		conta2.setAgencia(4321);
-		conta2.setNumero(654321);
+		Cliente cliente = new Cliente();
+		cliente.setNome("Gabi");
+		cliente.setEndereco("Rua Tocantins, 40");
+		cliente.setProfissao("Desenvolvedora");
+		cliente.setConta(conta);
 		
 		em.getTransaction().begin();
-		
-		em.persist(conta);
-		em.persist(conta2);
-	
+		em.persist(cliente);
 		em.getTransaction().commit();
+		em.close();
 	}
 	
 }
